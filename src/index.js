@@ -27,9 +27,20 @@ const NUMBERS = {
     70: "seventy",
     80: "eighty",
     90: "ninety",
-    100: "hundred"
+    100: "one hundred"
 }
 
 module.exports = function toReadable (number) {
-
+    let result;
+    if (number > 100) {
+        result = NUMBERS[Math.trunc(number/100)] + " hundred";
+        if (number%100!==0) {
+            result += " "+toReadable(number%100);
+        }
+    } else if (number > 20 && number%10 !== 0) {
+        result = NUMBERS[Math.trunc(number/10)*10]+" "+toReadable(number%10);
+    } else {
+        result = NUMBERS[number];
+    }
+    return result;
 }
